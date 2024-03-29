@@ -1,1 +1,1 @@
-from .user import *  # noqa
+from .users import *  # noqa
