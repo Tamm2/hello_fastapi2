@@ -12,27 +12,6 @@ def current_timestamp():
     return datetime.now(jst)
 
 
-"""
-usersテーブル
-id
-email
-password
-name
-created_at
-updated_at
-
-
-tasksテーブル
-OK id
-user_id ユーザーid, int nn, fk
-OK title タイトル, varchar(255) nn
-content 内容, text nn
-deadlined_at 期限日時, datetime
-completed_at 完了日時, datetime
-created_at 作成日時, datetime, nn
-updated_at 作成日時, datetime, nn
-"""
-
 @declarative_mixin
 class TaskMixin:
     id = Column(BigInteger, primary_key=True)
