@@ -10,4 +10,4 @@ def run_debug():
     if settings.DEBUG:
         import debugpy
 
-        debugpy.listen(("0.0.0.0", 9001))
+        debugpy.listen(("0.0.0.0", 9000))
