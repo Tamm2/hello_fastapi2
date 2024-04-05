@@ -6,8 +6,7 @@ from sqlalchemy.orm import declarative_mixin
 
 from config.settings import TIME_ZONE
 
-if TYPE_CHECKING:
-    from app.models.tasks import Task
+
 
 def current_timestamp():
     jst = timezone(TIME_ZONE)
@@ -24,7 +23,3 @@ class UserMixin:
     updated_at = Column(
         DateTime, nullable=False, default=current_timestamp, onupdate=current_timestamp
     )
-    
-    @declared_attr
-    def tasks(cls) -> Mapped["Task"]:
-        return relationship("Order", backref="user")
