@@ -1,4 +1,4 @@
-from common.database.model_mixins.user_mixins import TaskMixin
+from common.database.model_mixins.task_mixins import TaskMixin
 from config.settings import Base
 
 
