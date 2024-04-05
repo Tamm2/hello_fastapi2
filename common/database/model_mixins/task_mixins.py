@@ -20,7 +20,7 @@ class TaskMixin:
     user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)
     title = Column(String(255), nullable=False, comment="タイトル")
     content = Column(String(3000),nullable=False)
-    deadlined_at = Column(DateTime)
+    deadline_at = Column(DateTime)
     completed_at = Column(DateTime)
     created_at = Column(DateTime, nullable=False, default=current_timestamp)
     updated_at = Column(
