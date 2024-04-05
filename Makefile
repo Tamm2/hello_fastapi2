@@ -35,15 +35,14 @@ destroy: ## 開発環境削除
 	docker container ls -a -qf name=$(pn) | xargs docker container rm
 	docker volume ls -qf name=$(pn) | xargs docker volume rm
 
-
 reset: ## DBのリセット
-	docker compose -f $(pf) -p $(pn) exec -it fastapi pipenv run python app/console/commands/drop_all_tables.py
-	docker compose -f $(pf) -p $(pn) exec -it fastapi pipenv run alembic upgrade head
-	docker compose -f $(pf) -p $(pn) exec -it fastapi pipenv run python app/console/commands/seeds.py
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run python app/console/commands/drop_all_tables.py
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run python app/console/commands/seeds.py
 
 migrate: ## マイグレート
-	docker compose -f $(pf) -p $(pn) exec -it fastapi pipenv run alembic revision --autogenerate -m 'comment'
-	docker compose -f $(pf) -p $(pn) exec -it fastapi pipenv run alembic upgrade head
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic revision --autogenerate -m 'comment'
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
 
 user-api-shell: ## shellに入る
 	docker compose -f $(pf) -p $(pn) exec -it user-api bash
