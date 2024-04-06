@@ -40,14 +40,14 @@ reset: ## DBのリセット
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run python app/console/commands/seeds.py
 
+# DBの変更していない場合でもこのコマンドを実行するとマイグレーションファイルが作成されてしまうので注意
+# もし作成された場合はマイグレーションファイルを削除してからmake resetを実行すれば良い
 migrate: ## マイグレート
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic revision --autogenerate -m 'comment'
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
 
 user-api-shell: ## shellに入る
 	docker compose -f $(pf) -p $(pn) exec -it user-api bash
-
-
 
 db-shell: ## shellに入る
 	docker compose -f $(pf) -p $(pn) exec -it db bash
@@ -58,11 +58,8 @@ check: ## コードフォーマット
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run flake8 .
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run mypy .
 
-
-
 user-api-run: ## サーバー起動
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run uvicorn main:app --host 0.0.0.0 --reload --port 8000
-
 
 push: ## push
 # make format
