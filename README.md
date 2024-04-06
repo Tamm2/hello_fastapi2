@@ -18,7 +18,7 @@ fasapi
 想定エディタ: vscode or cursor
 デバッグ: debugpy
 ライブラリ管理: pipenv
-orm: sqlqlchemy
+orm: sqlalchemy
 mysql: 8.0
 フォーマッターなど: flake8, mypy, black, isort
 jwt: pyJwt

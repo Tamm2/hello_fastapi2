@@ -9,7 +9,7 @@ services:
     platform: linux/amd64
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      # MYSQL_DATABASE: sqlqlchemy # DBの作成はdocker/setup.dev.sqlにまとめた
+      # MYSQL_DATABASE: sqlalchemy # DBの作成はdocker/setup.dev.sqlにまとめた
     volumes:
       - db-data80:/var/lib/mysql
     ports:
