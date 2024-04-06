@@ -1,11 +1,11 @@
 import logging
 import os
 from pathlib import Path
+from urllib.parse import quote_plus
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from urllib.parse import quote_plus
 
 # .envを読み込む
 load_dotenv()
@@ -23,7 +23,7 @@ DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_DATABASE = os.getenv("DB_DATABASE")
 DB_USERNAME = os.getenv("DB_USERNAME")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 DB_CHARSET_TYPE = os.getenv("DB_CHARSET_TYPE")
 encoded_password = quote_plus(DB_PASSWORD)
 DATABASE_URL = f"{DB_DIALECT}+{DB_DRIVER}://{DB_USERNAME}:{encoded_password}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}?charset={DB_CHARSET_TYPE}"  # noqa: E501

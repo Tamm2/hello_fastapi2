@@ -1,9 +1,10 @@
-## todo管理サイトのER図のURL
+## todo 管理サイトの ER 図の URL
+
 ## https://drive.google.com/file/d/1GSeot1U89uGYx6iUUxCaAfQNHr6Gh0Ld/view?usp=drive_link
 
 ## 概要
 
-fastapi, のサンプルです  
+fastapi のサンプルです
 
 jwt 認証を入れています。
 それぞれフォーマッタが入っています。
@@ -81,7 +82,6 @@ make user-api-shell
 pipenv install numpy
 ```
 
-
 ## vscode で debugpy によるデバッグの方法
 
 vscode で debugpy によるデバッグ方法を説明します
@@ -129,16 +129,19 @@ make check
 新しくモデルのファイルを追加した場合は`app/models/__init__.py`に追記をする必要があります
 下記のコマンドを実行することでマイグレーションとマイグレートが実行できます
 
-### マイグレーション作成
+### マイグレーション作成 & マイグレート
 
 ```
+make user-api-shell
 pipenv run alembic revision --autogenerate -m 'comment'
-```
-
-### マイグレート
-
-```
 pipenv run alembic upgrade head
+```
+
+もしくは下記のコマンド  
+ただし Makefile の comment は随時変えること
+
+```
+make migrate
 ```
 
 ## push 際のルール
@@ -148,4 +151,3 @@ pipenv run alembic upgrade head
 ```
 make check
 ```
-

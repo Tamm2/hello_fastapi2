@@ -15,6 +15,7 @@ ENV PYTHONUNBUFFERED 1
 # キャッシュを作成しない
 ENV PYTHONDONTWRITEBYTECODE 1
 
+# パスを通す
 ENV PYTHONPATH "/app"
 
 # デバッグ用

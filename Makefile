@@ -47,8 +47,6 @@ migrate: ## マイグレート
 user-api-shell: ## shellに入る
 	docker compose -f $(pf) -p $(pn) exec -it user-api bash
 
-
-
 db-shell: ## shellに入る
 	docker compose -f $(pf) -p $(pn) exec -it db bash
 
