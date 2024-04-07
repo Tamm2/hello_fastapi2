@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "fastapi",
+      "type": "python",
+      "request": "attach",
+      "port": 9000,
+      "host": "localhost",
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/apps/fastapi",
+          "remoteRoot": "/app"
+        }
+      ]
+    },
+    {
+      "name": "scientist",
+      "type": "python",
+      "request": "attach",
+      "port": 9002,
+      "host": "localhost",
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/apps/scientist",
+          "remoteRoot": "/app"
+        }
+      ]
+    }
+  ]
+}
