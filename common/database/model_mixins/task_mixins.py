@@ -1,15 +1,5 @@
-from datetime import datetime
-
-from pytz import timezone  # type: ignore
-from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String, text
 from sqlalchemy.orm import declarative_mixin
-
-from config.settings import TIME_ZONE
-
-
-def current_timestamp():
-    jst = timezone(TIME_ZONE)
-    return datetime.now(jst)
 
 
 @declarative_mixin
@@ -20,7 +10,15 @@ class TaskMixin:
     content = Column(String(3000), nullable=False)
     deadline_at = Column(DateTime)
     completed_at = Column(DateTime)
-    created_at = Column(DateTime, nullable=False, default=current_timestamp)
+    created_at = Column(
+        DateTime,
+        nullable=False,
+        server_default=text("CURRENT_TIMESTAMP"),
+        comment="作成日時",
+    )
     updated_at = Column(
-        DateTime, nullable=False, default=current_timestamp, onupdate=current_timestamp
+        DateTime,
+        nullable=False,
+        server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
+        comment="更新日時",
     )
