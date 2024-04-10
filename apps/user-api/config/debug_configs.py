@@ -8,6 +8,7 @@ def run_debug():
     import debugpy
     はこの関数内でやること
     """
+
     if is_local() and settings.DEBUG:
         import debugpy
 
