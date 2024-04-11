@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app import models
@@ -8,6 +9,13 @@ from app.schemas.responses import account_responses
 from config import settings, swagger_configs
 
 router = APIRouter()
+
+
+class UserResponse(BaseModel):
+    name: str = Field(max_length=255)
+    email: str = Field(max_length=255)
+    password: str = Field(max_length=255)
+    tel: str = Field(max_length=15, description="15文字以内の電話番号")
 
 
 @router.post(
@@ -30,6 +38,14 @@ async def sign_up(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="すでに登録済みのメールアドレスです。",
+        )
+
+    # telがすでに登録済みでないか
+    is_exists = models.User.exist_user(db, request.tel)
+    if is_exists is True:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="すでに登録済みの電話番号です。",
         )
 
     # ユーザーを登録

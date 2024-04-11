@@ -25,6 +25,7 @@ class UserMixin:
         server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
         comment="更新日時",
     )
+    tel = Column(String(15), comment="電話番号")
 
     @declared_attr
     def tasks(cls) -> Mapped["Task"]:
