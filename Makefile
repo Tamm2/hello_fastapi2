@@ -10,7 +10,7 @@ cp-env: ## envのコピー
 
 init: ## 開発環境構築(ビルド)
 	make destroy
-	rm -rf apps/user-api/.venev
+	rm -rf apps/user-api/.venv
 	docker compose -f $(pf) -p $(pn) build --no-cache
 	docker compose -f $(pf) -p $(pn) down --volumes
 	docker compose -f $(pf) -p $(pn) up -d
@@ -21,7 +21,7 @@ init: ## 開発環境構築(ビルド)
 	make reset
 
 reinstall: ## 再インストール
-	rm -rf apps/user-api/.venev
+	rm -rf apps/user-api/.venv
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv install --dev
 
 up: ## 開発環境up
