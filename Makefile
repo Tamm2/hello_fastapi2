@@ -10,17 +10,18 @@ cp-env: ## envのコピー
 
 init: ## 開発環境構築(ビルド)
 	make destroy
+	rm -rf apps/user-api/.venv
 	docker compose -f $(pf) -p $(pn) build --no-cache
 	docker compose -f $(pf) -p $(pn) down --volumes
 	docker compose -f $(pf) -p $(pn) up -d
 	./docker/wait-for-db.sh
 	docker compose -f $(pf) -p $(pn) exec -T db mysql -psecret < docker/setup.dev.sql
-	make reinstall
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv install --dev
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
 	make reset
 
-reinstall: ## リインストール
-	rm -rf apps/user-api/.venev
+reinstall: ## 再インストール
+	rm -rf apps/user-api/.venv
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv install --dev
 
 up: ## 開発環境up
@@ -40,8 +41,15 @@ reset: ## DBのリセット
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run python app/console/commands/seeds.py
 
-# DBの変更していない場合でもこのコマンドを実行するとマイグレーションファイルが作成されてしまうので注意
-# もし作成された場合はマイグレーションファイルを削除してからmake resetを実行すれば良い
+migration-reset: ## マイグレーションのリセット
+# 開発中のコマンドになる
+# 運用が始まったら使用しないこと
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run python app/console/commands/drop_all_tables.py
+	rm -rf common/migrations/versions/*
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic revision --autogenerate -m 'comment'
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
+	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run python app/console/commands/seeds.py
+
 migrate: ## マイグレート
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic revision --autogenerate -m 'comment'
 	docker compose -f $(pf) -p $(pn) exec -it user-api pipenv run alembic upgrade head
@@ -70,6 +78,6 @@ push: ## push
 	git push origin main
 
 cc: ## キャッシュ クリア
-	rm -rf apps/user-api/log/user-api.log
+	rm -rf apps/user-api/log/fastapi.log
 	rm -rf apps/user-api/log/sqlalchemy.log
 	rm -rf apps/user-api/.mypy_cache
