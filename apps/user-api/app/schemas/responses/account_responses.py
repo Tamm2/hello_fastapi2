@@ -7,6 +7,7 @@ class AccountResponse(BaseModel):
     id: int = Field(example=1)
     name: str = Field(example="campbel")
     email: str = Field(example="xx@example.com")
+    tel : str = Field(example="0000000000")
 
 
 class JwtResponse(BaseModel):

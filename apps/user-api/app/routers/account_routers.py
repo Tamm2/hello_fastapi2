@@ -136,4 +136,4 @@ async def me(
     """
     自分の情報を取得
     """
-    return account_responses.AccountResponse.model_validate(auth_user.tel)
+    return account_responses.AccountResponse.model_validate(auth_user)
