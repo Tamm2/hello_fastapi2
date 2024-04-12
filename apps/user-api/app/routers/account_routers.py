@@ -10,14 +10,6 @@ from config import settings, swagger_configs
 
 router = APIRouter()
 
-
-class UserResponse(BaseModel):
-    name: str = Field(max_length=255)
-    email: str = Field(max_length=255)
-    password: str = Field(max_length=255)
-    tel: str = Field(max_length=15, description="15文字以内の電話番号")
-
-
 @router.post(
     "/v1/accounts/sign-up",
     response_model=account_responses.JwtResponse,
@@ -52,6 +44,7 @@ async def sign_up(
     user = models.User()
     user.name = request.name
     user.email = request.email
+    user.tel = request.tel
     user.password = models.User.password_to_hash(request.password)
     db.add(user)
     db.commit()
