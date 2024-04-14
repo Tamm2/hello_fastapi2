@@ -5,7 +5,7 @@ class SignUpRequest(BaseModel):
     name: str = Field(example="test1")
     email: EmailStr = Field(example="test1@example.com")
     password: str = Field(example="test1234")
-    tel: str = Field(max_length = 15)
+    tel: str = Field(max_length=15)
 
 
 class SignInRequest(BaseModel):
