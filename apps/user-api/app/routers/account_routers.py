@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel, Field
+
+# from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app import models
@@ -9,6 +10,7 @@ from app.schemas.responses import account_responses
 from config import settings, swagger_configs
 
 router = APIRouter()
+
 
 @router.post(
     "/v1/accounts/sign-up",
