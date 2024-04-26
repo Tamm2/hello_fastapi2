@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+#from fastapi import APIRouter, Depends, HTTPException, status
+
+# from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app import models
@@ -32,10 +34,19 @@ async def sign_up(
             detail="すでに登録済みのメールアドレスです。",
         )
 
+    # telがすでに登録済みでないか
+    is_exists = models.User.exist_user(db, request.tel)
+    if is_exists is True:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="すでに登録済みの電話番号です。",
+        )
+
     # ユーザーを登録
     user = models.User()
     user.name = request.name
     user.email = request.email
+    user.tel = request.tel
     user.password = models.User.password_to_hash(request.password)
     db.add(user)
     db.commit()
